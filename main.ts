@@ -3,7 +3,7 @@ import { ulid } from "ulid";
 
 function addID(app: App): (f: TFile) => Promise<void> {
     return async function (f: TFile): Promise<void> {
-        const key = "id";
+        const key = "slug";
         if (!app.metadataCache.getFileCache(f)?.frontmatter?.[key]) {
             await app.fileManager.processFrontMatter(f, (data) => {
                 data[key] = ulid();
