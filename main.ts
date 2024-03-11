@@ -15,7 +15,15 @@ function addID(app: App): (f: TFile) => Promise<void> {
 function addIDsToAllNotes(app: App) {
     const _addID = addID(app);
     return function () {
-        app.vault.getMarkdownFiles().forEach((f) => _addID(f));
+        app.vault.getMarkdownFiles().forEach((f) => {
+            if (f.parent.name !== "default" && 
+                f.parent.name !== "homepage" && 
+                f.parent.name !== "archive" && 
+                f.name !== "_index.md"
+               ) {
+                _addID(f);
+            }
+        });
     };
 }
 
