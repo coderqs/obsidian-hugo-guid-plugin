@@ -16,9 +16,11 @@ function addIDsToAllNotes(app: App) {
     const _addID = addID(app);
     return function () {
         app.vault.getMarkdownFiles().forEach((f) => {
-            if (f.parent.name !== "default" && 
+            if (f.parent && 
+                f.parent.name !== "default" && 
                 f.parent.name !== "homepage" && 
                 f.parent.name !== "archive" && 
+                f.parent.name !== "template" &&
                 f.name !== "_index.md"
                ) {
                 _addID(f);
