@@ -1,10 +1,10 @@
 {
-    "id": "guid-front-matter",
+    "id": "hugo-guid-front-matter",
     "name": "Add an ID to the front matter",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "minAppVersion": "0.15.0",
-    "description": "Add a globally unique ID to every markdown document's front matter",
-    "author": "Bill Mill",
-    "authorUrl": "https://billmill.org",
+    "description": "为每个 MarkDown 文件添加全局唯一的 ID。并忽略 _index.md 文件",
+    "author": "Coderqs",
+    "authorUrl": "https://coderqs.com",
     "isDesktopOnly": false
 }

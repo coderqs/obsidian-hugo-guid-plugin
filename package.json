@@ -1,14 +1,14 @@
 {
-    "name": "guid-front-matter",
-    "version": "1.2.0",
-    "description": "Add a globally unique ID to every markdown document's front matter",
+    "name": "hugo-guid-front-matter",
+    "version": "1.2.1",
+    "description": "为每个 MarkDown 文件添加全局唯一的 ID。并忽略 _index.md 文件",
     "main": "main.js",
     "scripts": {
         "dev": "make watch",
         "build": "make production"
     },
     "keywords": [],
-    "author": "Bill Mill",
+    "author": "coderqs",
     "license": "MIT",
     "devDependencies": {
         "@types/node": "^16.11.6",
