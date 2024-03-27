@@ -1,17 +1,6 @@
 import { App, Plugin, TFile } from "obsidian";
 import { ulid } from "ulid";
 
-function addID(app: App): (f: TFile) => Promise<void> {
-    return async function (f: TFile): Promise<void> {
-        const key = "slug";
-        if (!app.metadataCache.getFileCache(f)?.frontmatter?.[key]) {
-            await app.fileManager.processFrontMatter(f, (data) => {
-                data[key] = ulid();
-            });
-        }
-    };
-}
-
 function isExcluded(fullPath:string){
     const excludePath = ["default", "homepage", "archive", "template"];
     const excludeFile = ["_index.md"];
@@ -33,13 +22,25 @@ function isExcluded(fullPath:string){
     return false;
 }
 
+function addID(app: App): (f: TFile) => Promise<void> {
+    return async function (f: TFile): Promise<void> {
+        if (isExcluded(f.path)) {
+            return;
+        }
+        const key = "slug";
+        if (!app.metadataCache.getFileCache(f)?.frontmatter?.[key]) {
+            await app.fileManager.processFrontMatter(f, (data) => {
+                data[key] = ulid();
+            });
+        }
+    };
+}
+
 function addIDsToAllNotes(app: App) {
     const _addID = addID(app);
     return function () {
         const filelist = app.vault.getMarkdownFiles().forEach(f => {
-            if (!isExcluded(f.path)){
-                _addID(f);
-            }
+            _addID(f);
         });
     };
 }
