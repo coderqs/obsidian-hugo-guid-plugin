@@ -12,17 +12,32 @@ function addID(app: App): (f: TFile) => Promise<void> {
     };
 }
 
+function isExcluded(fullPath:string){
+    const excludePath = ["default", "homepage", "archive", "template"];
+    const excludeFile = ["_index.md"];
+    const pathSegments = fullPath.split('/');
+
+    let fn = pathSegments.pop();
+    if (fn === '') {
+        fn = pathSegments.pop();
+    }
+    if(fn !== undefined && excludeFile.includes(fn)) {
+        return true;
+    }
+
+    for(let i = 0; i < pathSegments.length; i++) {
+        if (excludePath.includes(pathSegments[i]))
+            return true;
+    }
+
+    return false;
+}
+
 function addIDsToAllNotes(app: App) {
     const _addID = addID(app);
     return function () {
-        app.vault.getMarkdownFiles().forEach((f) => {
-            if (f.parent && 
-                f.parent.name !== "default" && 
-                f.parent.name !== "homepage" && 
-                f.parent.name !== "archive" && 
-                f.parent.name !== "template" &&
-                f.name !== "_index.md"
-               ) {
+        const filelist = app.vault.getMarkdownFiles().forEach(f => {
+            if (!isExcluded(f.path)){
                 _addID(f);
             }
         });
